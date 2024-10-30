@@ -1,9 +1,11 @@
+import { BookOpenCheck } from "lucide-react";
 import Link from "next/link";
 
 export const Navbar = () => {
     return (
         <nav className="fixed top-0 left-0 w-full h-[60px] bg-slate-200 flex items-center justify-between px-8 text-slate-900">
-            <Link href={"/"}>
+            <Link href={"/"} className="flex gap-2 items-center justify-center">
+                <BookOpenCheck />
                 <h1 className="text-2xl font-bold">Inkwell</h1>
             </Link>
             <Link
