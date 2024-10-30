@@ -1,5 +1,8 @@
 "use client";
 import { FormInputPost } from "@/types";
+import { Tag } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React, { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 interface FormPostProps {
@@ -8,6 +11,15 @@ interface FormPostProps {
 }
 export const FormPost: FC<FormPostProps> = ({ submit, isEditing }) => {
     const { register, handleSubmit } = useForm<FormInputPost>();
+    //tags
+    const { data: dataTags, isLoading: isLoadingTags } = useQuery<Tag[]>({
+        queryKey: ["tags"],
+        queryFn: async () => {
+            const response = await axios.get("/api/tags");
+            return response.data;
+        },
+    });
+    console.log(dataTags);
     return (
         <form
             onSubmit={handleSubmit(submit)}
@@ -25,19 +37,24 @@ export const FormPost: FC<FormPostProps> = ({ submit, isEditing }) => {
                 placeholder="Blog Content"
                 className="max-w-lg w-full p-3 border border-slate-300 rounded-xl focus:outline-2 focus:outline-slate-300 focus:outline-offset-4"
             ></textarea>
-
-            <select
-                {...register("tag", { required: true })}
-                defaultValue={""}
-                className="max-w-lg w-full p-3 border border-slate-300 rounded-xl focus:outline-2 focus:outline-slate-300 focus:outline-offset-4"
-            >
-                <option disabled value={""}>
-                    Select tags
-                </option>
-                <option value="javascript">javascript</option>
-                <option value="php">php</option>
-                <option value="python">python</option>
-            </select>
+            {isLoadingTags ? (
+                "loading..."
+            ) : (
+                <select
+                    {...register("tag", { required: true })}
+                    defaultValue={""}
+                    className="max-w-lg w-full p-3 border border-slate-300 rounded-xl focus:outline-2 focus:outline-slate-300 focus:outline-offset-4"
+                >
+                    <option disabled value={""}>
+                        Select tags
+                    </option>
+                    {dataTags?.map((item: Tag) => (
+                        <option key={item.id} value={item.id}>
+                            {item.name}
+                        </option>
+                    ))}
+                </select>
+            )}
 
             <button
                 type="submit"
