@@ -4,8 +4,9 @@ import React, { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 interface FormPostProps {
     submit: SubmitHandler<FormInputPost>;
+    isEditing: boolean;
 }
-export const FormPost: FC<FormPostProps> = ({ submit }) => {
+export const FormPost: FC<FormPostProps> = ({ submit, isEditing }) => {
     const { register, handleSubmit } = useForm<FormInputPost>();
     return (
         <form
@@ -42,7 +43,7 @@ export const FormPost: FC<FormPostProps> = ({ submit }) => {
                 type="submit"
                 className="py-2 px-7 w-full max-w-lg font-semibold text-lg text-center rounded-xl bg-green-200 hover:text-white hover:bg-green-700 transition-colors"
             >
-                Create Post
+                {isEditing ? "Update" : "Create"} Post
             </button>
         </form>
     );
