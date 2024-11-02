@@ -13,7 +13,7 @@ interface PostCardProps {
 export const PostCard: FC<PostCardProps> = ({ post }) => {
     const { id, title, content, tag } = post;
     return (
-        <div className="w-[300px] h-[200px] border-2 border-slate-200 rounded-xl shadow-xl p-6 flex flex-col justify-between">
+        <div className="w-[300px] max-h-[200px] border-2 border-slate-200 rounded-xl shadow-xl p-6 flex flex-col gap-2 justify-between">
             <h2 className="text-2xl font-semibold line-clamp-1">{title}</h2>
             <p className="line-clamp-3 text-slate-800">{content}</p>
             <div className="flex gap-2 items-center justify-end">
