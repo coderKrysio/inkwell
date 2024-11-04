@@ -9,6 +9,7 @@ export async function POST(req: Request) {
                 title: body.title,
                 content: body.content,
                 tagId: body.tagId,
+                author_id: body.authorId,
             },
         });
         return NextResponse.json(post, { status: 200 });

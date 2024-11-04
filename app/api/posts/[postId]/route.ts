@@ -75,6 +75,7 @@ export async function GET(
             },
             include: {
                 tag: true,
+                author: true,
             },
         });
         return NextResponse.json(post, { status: 200 });
