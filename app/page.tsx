@@ -9,6 +9,7 @@ async function getPosts() {
             title: true,
             content: true,
             tag: true,
+            author: true,
         },
     });
     return response;
