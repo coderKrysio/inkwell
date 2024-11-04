@@ -27,4 +27,26 @@ model Post {
   updatedAt DateTime @updatedAt
   tagId     String
   tag       Tag      @relation(fields: [tagId], references: [id])
+  author_id String
+  author    User     @relation(fields: [author_id], references: [id])
 }
+
+model User {
+  id              String   @id @default(cuid())
+  first_name      String
+  last_name       String
+  email           String
+  profile_image   String?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+  published_blogs Post[]
+}
+
+// model Video_likes{
+//   like_id String @id @unique @default(cuid())
+//   video_id String
+//   user_id String 
+//   liked_at DateTime @default(now())
+//   video Videos @relation(fields: [video_id],references: [video_id],onDelete: Cascade)
+//   user User @relation(fields : [user_id], references: [id], onDelete: Cascade)
+// }
