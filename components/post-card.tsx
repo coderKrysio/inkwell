@@ -1,3 +1,16 @@
+"use client";
+
+import { useState } from "react";
+import { Heart, ArrowRight } from "lucide-react";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardFooter,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { wordCounter, wordsPerMinute } from "@/lib/blog/estimateTime";
 import { Tag, User } from "@prisma/client";
 import Link from "next/link";
@@ -14,30 +27,75 @@ interface PostCardProps {
 
 export const PostCard: FC<PostCardProps> = ({ post }) => {
     const { id, title, content, tag, author } = post;
-    const postTime = Math.ceil(wordCounter(content) / wordsPerMinute);
+    const readTime = Math.ceil(wordCounter(content) / wordsPerMinute);
+    const [likeCount, setLikeCount] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
+    let bannerUrl = "/placeholder.svg?height=200&width=400";
+
+    const handleLike = () => {
+        if (isLiked) {
+            setLikeCount(likeCount - 1);
+        } else {
+            setLikeCount(likeCount + 1);
+        }
+        setIsLiked(!isLiked);
+    };
     return (
-        <div className="w-[300px] h-[200px] border-2 border-slate-200 rounded-xl shadow-xl p-6 flex flex-col gap-2 justify-between">
-            <div className="flex flex-col">
-                <h2 className="text-2xl font-semibold line-clamp-1">{title}</h2>
-                <span className="text-slate-600">
-                    {author.first_name + " " + author.last_name}
-                </span>
-                <span className="text-slate-600">
-                    {postTime} {postTime > 1 ? "mins" : "min"}
-                </span>
-            </div>
-            <p className="line-clamp-3 text-slate-800">{content}</p>
-            <div className="flex gap-2 items-center justify-end">
-                <p className="bg-black text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded-full w-fit">
-                    {tag.name}
-                </p>
-                <Link
-                    href={`/blog/${id}`}
-                    className="text-right hover:underline"
-                >
-                    Read More
+        <Card className="w-[300px] h-[443.2px] flex flex-col shadow-xl overflow-hidden">
+            <CardHeader className="p-0">
+                <Image
+                    src={"/banner.jpeg"}
+                    alt={`Banner for ${title}`}
+                    width={400}
+                    height={200}
+                    className="w-full h-48 object-cover"
+                />
+            </CardHeader>
+            <CardContent className="p-4 relative">
+                <h2 className="text-2xl font-bold mb-2 line-clamp-1">
+                    {title}
+                </h2>
+                <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center text-sm text-gray-500">
+                        <span>
+                            {author.first_name + " " + author.last_name}
+                        </span>
+                        <span className="mx-2">•</span>
+                        <span>{readTime} min read</span>
+                    </div>
+                    <button
+                        onClick={handleLike}
+                        className="flex items-center justify-center space-x-1 text-gray-600 hover:text-red-500 transition-colors duration-200"
+                    >
+                        <Heart
+                            className={`w-4 h-4 ${
+                                isLiked
+                                    ? "fill-red-700 text-red-700"
+                                    : "fill-none"
+                            }`}
+                        />
+                        <span>{likeCount}</span>
+                    </button>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-3">
+                    {/* {tags.map((tag, index) => ( */}
+                    <Badge variant="outline">{tag.name}</Badge>
+                    {/* ))} */}
+                </div>
+                <p className="text-gray-600 line-clamp-2 mb-2">{content}</p>
+            </CardContent>
+            <CardFooter className="p-4 pt-0 mt-auto">
+                <Link href={`/blog/${id}`} className="w-full">
+                    <Button
+                        variant={"outline"}
+                        className="w-full hover:text-primary-foreground hover:bg-primary/90 transition-colors"
+                    >
+                        Read More
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                 </Link>
-            </div>
-        </div>
+            </CardFooter>
+        </Card>
     );
 };
