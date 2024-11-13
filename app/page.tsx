@@ -1,27 +1,18 @@
+import { FilterBar } from "@/components/filter-bar";
 import { PostCard } from "@/components/post-card";
-import { db } from "@/lib/db";
-import { title } from "process";
+import { getPageInfo } from "@/lib/hooks/getPageInfo";
+import { PageProps } from "@/lib/types/types";
 
-async function getPosts() {
-    const response = await db.post.findMany({
-        select: {
-            id: true,
-            title: true,
-            content: true,
-            tag: true,
-            author: true,
-        },
-    });
-    return response;
-}
-
-export default async function Home() {
-    const posts = await getPosts();
+export default async function Home({ searchParams }: PageProps) {
+    const { posts, resultLength } = await getPageInfo({ searchParams });
     return (
-        <div className="flex flex-wrap items-center justify-start gap-14 w-full max-[768px]:justify-center">
-            {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-            ))}
+        <div className="w-full flex flex-col gap-4">
+            <FilterBar resultLength={resultLength} />
+            <div className="flex flex-wrap items-center justify-start gap-14 w-full max-[768px]:justify-center">
+                {posts.map((post: any) => (
+                    <PostCard key={post.id} post={post} />
+                ))}
+            </div>
         </div>
     );
 }
