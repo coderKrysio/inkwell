@@ -8,22 +8,17 @@ export async function POST(req: Request) {
         const { getUser, isAuthenticated } = getKindeServerSession();
         const user = await getUser();
         const isAuth = await isAuthenticated();
-
         if (!isAuth) {
             redirect("/");
         }
 
         if (user != null) {
-            console.log(user);
-
             let existingUser = await db.user.findUnique({
                 where: {
                     id: user.id,
                 },
             });
-            if (existingUser != null) {
-                redirect("/");
-            } else {
+            if (existingUser === null) {
                 existingUser = await db.user.create({
                     data: {
                         id: user.id,
