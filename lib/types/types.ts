@@ -2,6 +2,7 @@ export interface PageProps {
     searchParams?: Promise<{
         search?: string;
         rd?: string;
+        tag?: string[];
     }>;
 }
 
