@@ -1,8 +1,9 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BookOpenCheck } from "lucide-react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 import Image from "next/image";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 export const Navbar = async () => {
     const { getUser } = getKindeServerSession();
@@ -13,6 +14,8 @@ export const Navbar = async () => {
                 <BookOpenCheck />
                 <h1 className="text-2xl font-bold">Inkwell</h1>
             </Link>
+
+            <LogoutLink>Log out</LogoutLink>
             <div className="flex items-center justify-center gap-4">
                 <Link
                     href={"/create"}
