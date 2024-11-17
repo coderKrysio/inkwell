@@ -1,11 +1,11 @@
 "use client";
+import { TagsProps } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { useFilterBar } from "./useFilterBar";
-export const useTags = ({ searhtags }: { searhtags: string[] }) => {
-    const { handleReadTimeToggle, handleTagToggle } = useFilterBar({
-        searhtags,
-    });
+export const useTags = ({
+    handleReadTimeToggle,
+    handleTagToggle,
+}: TagsProps) => {
     const { replace } = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -19,7 +19,7 @@ export const useTags = ({ searhtags }: { searhtags: string[] }) => {
             params.delete("rd");
         }
         replace(`${pathname}?${params.toString()}`);
-    }, 300);
+    }, 100);
 
     const handleTagsChange = useDebouncedCallback((tag: string) => {
         handleTagToggle(tag);
