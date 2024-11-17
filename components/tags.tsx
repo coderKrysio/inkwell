@@ -23,6 +23,7 @@ import { ChevronDown } from "lucide-react";
 
 import { useFilterBar } from "@/lib/hooks/useFilterBar";
 import { useTags } from "@/lib/hooks/useTags";
+import { TagsProps } from "@/types";
 
 const tags = [
     "Web Dev",
@@ -34,12 +35,15 @@ const tags = [
     "TypeScript",
 ];
 
-interface TagsProps {
-    searhtags: string[];
-}
-
-export const Tags: FC<TagsProps> = ({ searhtags }) => {
-    const { handleReadTimeChange, handleTagsChange } = useTags({ searhtags });
+export const Tags: FC<TagsProps> = ({
+    searhtags,
+    handleReadTimeToggle,
+    handleTagToggle,
+}) => {
+    const { handleReadTimeChange, handleTagsChange } = useTags({
+        handleReadTimeToggle,
+        handleTagToggle,
+    });
     const { selectedReadTime } = useFilterBar({
         searhtags,
     });

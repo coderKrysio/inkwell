@@ -29,7 +29,6 @@ export const FilterBar = ({ resultLength, searhtags }: FilterBarProps) => {
         hasActiveFilters,
         clearAllFilters,
     } = useFilterBar({ searhtags });
-
     return (
         <div className="w-full py-2">
             <div className="flex flex-wrap items-center gap-2">
@@ -45,7 +44,13 @@ export const FilterBar = ({ resultLength, searhtags }: FilterBarProps) => {
                         <SelectItem value="readTime">Read Time</SelectItem>
                     </SelectContent>
                 </Select>
-                <Tags searhtags={searhtags} />
+                <Tags
+                    {...{
+                        searhtags,
+                        handleReadTimeToggle,
+                        handleTagToggle,
+                    }}
+                />
                 {hasActiveFilters && (
                     <Button
                         variant="outline"
