@@ -20,8 +20,9 @@ import {
 import { Button } from "./ui/button";
 import { readTimes } from "@/lib/search";
 import { ChevronDown } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
+
+import { useFilterBar } from "@/lib/hooks/useFilterBar";
+import { useTags } from "@/lib/hooks/useTags";
 
 const tags = [
     "Web Dev",
@@ -34,33 +35,14 @@ const tags = [
 ];
 
 interface TagsProps {
-    selectedReadTime: string;
-    selectedTags: string[];
-    handleTagToggle: (tag: string) => void;
-    handleReadTimeToggle: (readTime: string) => void;
+    searhtags: string[];
 }
 
-export const Tags: FC<TagsProps> = ({
-    selectedReadTime,
-    selectedTags,
-    handleTagToggle,
-    handleReadTimeToggle,
-}) => {
-    const { replace } = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-
-    const handleReadTimeChange = useDebouncedCallback((term: string) => {
-        handleReadTimeToggle(term);
-        const params = new URLSearchParams(searchParams);
-        if (term) {
-            params.set("rd", term);
-        } else {
-            params.delete("rd");
-        }
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);
-
+export const Tags: FC<TagsProps> = ({ searhtags }) => {
+    const { handleReadTimeChange, handleTagsChange } = useTags({ searhtags });
+    const { selectedReadTime } = useFilterBar({
+        searhtags,
+    });
     return (
         <>
             <Select
@@ -93,8 +75,8 @@ export const Tags: FC<TagsProps> = ({
                     {tags.map((tag) => (
                         <DropdownMenuCheckboxItem
                             key={tag}
-                            checked={selectedTags.includes(tag)}
-                            onCheckedChange={() => handleTagToggle(tag)}
+                            checked={false}
+                            onCheckedChange={() => handleTagsChange(tag)}
                         >
                             {tag}
                         </DropdownMenuCheckboxItem>
