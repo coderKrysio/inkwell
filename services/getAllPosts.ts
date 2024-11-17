@@ -3,11 +3,11 @@ import { db } from "@/lib/db";
 
 interface GetPostsProps {
     search?: string;
-    tags?: string;
+    tags?: string[];
     rd?: number;
 }
 
-async function getPosts({ search, tags }: GetPostsProps) {
+async function getFilteredPosts({ search, tags }: GetPostsProps) {
     const response = await db.post.findMany({
         where: {
             OR: [
@@ -50,8 +50,11 @@ async function getPosts({ search, tags }: GetPostsProps) {
             ],
             // AND: [
             //     {
-            //         content: {
-
+            //         tag: {
+            //             name: {
+            //                 contains: tags as unknown as string,
+            //                 mode: "insensitive",
+            //             },
             //         },
             //     },
             // ],
@@ -72,7 +75,7 @@ export async function filterPostsByReadTime({
     tags,
     rd,
 }: GetPostsProps) {
-    const allPosts = await getPosts({ search, tags });
+    const allPosts = await getFilteredPosts({ search, tags });
 
     const filteredPosts = allPosts.filter((post) => {
         const postReadTime = Math.ceil(
@@ -88,6 +91,22 @@ export async function filterPostsByReadTime({
             return postReadTime >= 20;
         } else {
             return postReadTime > 0;
+        }
+    });
+
+    return filteredPosts;
+}
+
+export async function getPosts({ search, tags, rd }: GetPostsProps) {
+    const allPosts = await filterPostsByReadTime({ search, tags, rd });
+    const filteredPosts = allPosts.filter((post) => {
+        if (tags !== undefined) {
+            return tags.some(
+                (tagName) =>
+                    post.tag.name.toLowerCase() === tagName.toLowerCase()
+            );
+        } else {
+            return post.tag.name;
         }
     });
 
