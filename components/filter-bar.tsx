@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,47 +11,24 @@ import {
 } from "@/components/ui/select";
 import { SearchBar } from "./search-bar";
 import { Tags } from "./tags";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { readTimes } from "@/lib/search";
+import { useFilterBar } from "@/lib/hooks/useFilterBar";
 
 interface FilterBarProps {
     resultLength: number;
     query?: string;
+    searhtags: string[];
 }
 
-export const FilterBar = ({ resultLength }: FilterBarProps) => {
-    const [selectedReadTime, setSelectedReadTimes] = useState<string>("");
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-    const { replace } = useRouter();
-    const pathname = usePathname();
-    const params = new URLSearchParams(useSearchParams());
-
-    const handleReadTimeToggle = (readTime: string) => {
-        if (selectedReadTime.includes(readTime)) {
-            setSelectedReadTimes("");
-            params.delete("rd");
-            replace(`${pathname}?${params.toString()}`);
-        } else {
-            setSelectedReadTimes((prev) =>
-                prev.includes(readTime) ? prev.replace(readTime, "") : readTime
-            );
-        }
-    };
-
-    const handleTagToggle = (tag: string) => {
-        setSelectedTags((prev) =>
-            prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-        );
-    };
-
-    const clearAllFilters = () => {
-        setSelectedReadTimes("");
-        setSelectedTags([]);
-        params.delete("rd");
-        replace(`${pathname}?${params.toString()}`);
-    };
-
-    const hasActiveFilters = selectedReadTime != "" || selectedTags.length > 0;
+export const FilterBar = ({ resultLength, searhtags }: FilterBarProps) => {
+    const {
+        selectedReadTime,
+        selectedTags,
+        handleReadTimeToggle,
+        handleTagToggle,
+        hasActiveFilters,
+        clearAllFilters,
+    } = useFilterBar({ searhtags });
 
     return (
         <div className="w-full py-2">
@@ -70,14 +45,7 @@ export const FilterBar = ({ resultLength }: FilterBarProps) => {
                         <SelectItem value="readTime">Read Time</SelectItem>
                     </SelectContent>
                 </Select>
-                <Tags
-                    {...{
-                        selectedReadTime,
-                        selectedTags,
-                        handleTagToggle,
-                        handleReadTimeToggle,
-                    }}
-                />
+                <Tags searhtags={searhtags} />
                 {hasActiveFilters && (
                     <Button
                         variant="outline"
