@@ -3,10 +3,14 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export const useFilterBar = ({ searhtags }: { searhtags: string[] }) => {
+export const useFilterBar = ({
+    searhtags,
+}: {
+    searhtags: string[] | undefined;
+}) => {
     const [selectedReadTime, setSelectedReadTimes] = useState<string>("");
     const [selectedTags, setSelectedTags] = useState<string[]>(
-        searhtags != undefined ? searhtags : []
+        searhtags != undefined ? (searhtags as string[]) : []
     );
     const { replace } = useRouter();
     const pathname = usePathname();
