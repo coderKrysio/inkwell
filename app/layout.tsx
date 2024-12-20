@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Providers } from "@/components/providers";
 import { AuthProvider } from "@/components/authprovider";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -32,12 +34,16 @@ export default function RootLayout({
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
-                    <Providers>
-                        <Navbar />
-                        <main className="flex items-start justify-center w-full min-h-screen p-14 pt-[92px]">
-                            {children}
-                        </main>
-                    </Providers>
+                    <SidebarProvider>
+                        <AppSidebar />
+
+                        <Providers>
+                            <Navbar />
+                            <main className="flex items-start justify-center w-full min-h-screen p-14 pt-[92px]">
+                                {children}
+                            </main>
+                        </Providers>
+                    </SidebarProvider>
                 </body>
             </html>
         </AuthProvider>
