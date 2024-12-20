@@ -46,3 +46,9 @@ export interface PageInfoProps {
     }[];
     resultLength: number;
 }
+
+export interface GetUserPostsProps {
+    user_id: string;
+    first_name: string | null;
+    last_name: string | null;
+}
