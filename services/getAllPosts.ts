@@ -7,7 +7,7 @@ interface GetPostsProps {
     rd?: number;
 }
 
-async function getFilteredPosts({ search, tags }: GetPostsProps) {
+async function getFilteredPosts({ search }: GetPostsProps) {
     const response = await db.post.findMany({
         where: {
             OR: [
@@ -48,16 +48,6 @@ async function getFilteredPosts({ search, tags }: GetPostsProps) {
                     },
                 },
             ],
-            // AND: [
-            //     {
-            //         tag: {
-            //             name: {
-            //                 contains: tags as unknown as string,
-            //                 mode: "insensitive",
-            //             },
-            //         },
-            //     },
-            // ],
         },
         select: {
             id: true,
