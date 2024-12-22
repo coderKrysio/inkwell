@@ -7,7 +7,7 @@ export const BackButton = () => {
     const router = useRouter();
     return (
         <button
-            className="flex gap-2 items-center hover:underline"
+            className="flex gap-2 items-center mt-2 hover:underline"
             onClick={() => router.back()}
         >
             <ChevronLeft width={18} />

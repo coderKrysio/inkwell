@@ -50,7 +50,7 @@ export const AppSidebar = () => {
     const user = getUser();
 
     return (
-        <Sidebar collapsible="icon" className="pt-[65px]">
+        <Sidebar collapsible="icon" className="pt-[56px]">
             <SidebarHeader>
                 <SidebarMenuButton
                     size="lg"

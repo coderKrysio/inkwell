@@ -39,7 +39,7 @@ export default function RootLayout({
 
                         <Providers>
                             <Navbar />
-                            <main className="flex items-start justify-center w-full min-h-screen p-14 pt-[92px]">
+                            <main className="flex items-start justify-center w-full min-h-screen p-14">
                                 {children}
                             </main>
                         </Providers>

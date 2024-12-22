@@ -30,7 +30,7 @@ export const FilterBar = ({ resultLength, searhtags }: FilterBarProps) => {
         clearAllFilters,
     } = useFilterBar({ searhtags });
     return (
-        <div className="w-full py-2">
+        <div className="w-full py-2 pt-4">
             <div className="flex flex-wrap items-center gap-2">
                 <SearchBar />
                 <Select>
