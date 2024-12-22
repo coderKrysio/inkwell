@@ -59,7 +59,7 @@ export const Navbar = () => {
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b">
-            <div className="flex h-16 items-center px-4 gap-4">
+            <div className="flex h-14 items-center px-4 gap-3">
                 <SidebarTrigger className="border-none">
                     <Menu className="h-6 w-6" />
                     <span className="sr-only">Toggle Sidebar</span>
@@ -73,19 +73,6 @@ export const Navbar = () => {
                         Inkwell
                     </span>
                 </Link>
-                <div className="flex-1">
-                    <form className="flex w-full max-w-sm items-center space-x-2">
-                        <Input
-                            type="search"
-                            placeholder="Search posts..."
-                            className="w-full"
-                        />
-                        <Button type="submit" size="icon" variant="ghost">
-                            <Search className="h-4 w-4" />
-                            <span className="sr-only">Search</span>
-                        </Button>
-                    </form>
-                </div>
 
                 <div className="ml-auto flex items-center space-x-4">
                     {isAuthenticated ? (
