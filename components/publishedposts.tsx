@@ -4,6 +4,7 @@ import { getUserPosts } from "@/lib/hooks/getUserPosts";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
+import { BlogCard } from "./blog-card";
 
 export const PublishedPosts = async () => {
     const { getUser } = getKindeServerSession();
@@ -16,15 +17,19 @@ export const PublishedPosts = async () => {
 
     return (
         <div className="w-full flex flex-col gap-4 h-full">
-            <p className="font-medium text-gray-800">
-                {resultLength} Blog{resultLength > 1 ? "s" : ""} Published
-            </p>
-            {resultLength > 0 ? (
-                <div className="flex flex-wrap items-center justify-start gap-14 w-full max-[768px]:justify-center">
-                    {posts.map((post: any) => (
-                        <PostCard key={post.id} post={post} />
-                    ))}
-                </div>
+            {resultLength < 0 ? (
+                <>
+                    <p className="font-medium text-gray-800">
+                        {resultLength} Blog{resultLength > 1 ? "s" : ""}{" "}
+                        Published
+                    </p>
+
+                    <div className="space-y-6">
+                        {posts.map((post: any) => (
+                            <BlogCard key={post.id} post={post} />
+                        ))}
+                    </div>
+                </>
             ) : (
                 <div className="h-full flex flex-col items-center justify-center p-8 text-center bg-gray-50 rounded-lg shadow-sm">
                     <div className="mb-4">
