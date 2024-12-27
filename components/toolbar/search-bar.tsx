@@ -1,7 +1,7 @@
 "use client";
 import { Search, X } from "lucide-react";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { useSearchBar } from "@/lib/hooks/useSearchBar";
 
 export const SearchBar = () => {
