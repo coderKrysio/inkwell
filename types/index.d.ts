@@ -1,3 +1,11 @@
+import {
+    Blog_likes,
+    Bookmarked_Blog,
+    Comment,
+    Post,
+    User,
+} from "@prisma/client";
+
 export type FormInputPost = {
     title: string;
     content: string;
@@ -5,12 +13,6 @@ export type FormInputPost = {
     authorId: string;
 };
 
-export type User = {
-    first_name: string;
-    last_name: string;
-    email: string;
-    profile_image: string;
-};
 export interface TagsProps {
     searhtags?: string[];
     handleReadTimeToggle: (readTime: string) => void;
@@ -51,4 +53,27 @@ export interface GetUserPostsProps {
     user_id: string;
     first_name: string | null;
     last_name: string | null;
+}
+
+export interface PostProps {
+    id: string;
+    title: string;
+    content: string;
+    banner_url: string;
+    createdAt: Date;
+    author: User;
+    tags: Tag[];
+    comments: Comment[];
+    blog_likes: Blog_likes[];
+    bookmarked_blog: Bookmarked_Blog[];
+}
+
+export interface PostComments {
+    comment_id: String;
+    comment_content: String;
+    commented_at: DateTime;
+    post_id: String;
+    post: Post;
+    user_id: String;
+    user: User;
 }
