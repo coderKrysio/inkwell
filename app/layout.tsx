@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/toolbar/navbar";
-import { Providers } from "@/components/providers";
-import { AuthProvider } from "@/components/authprovider";
+import { Providers } from "@/components/layout/providers";
+import { AuthProvider } from "@/components/layout/authprovider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/toolbar/app-sidebar";
 

@@ -1,7 +1,7 @@
 "use client";
-import { StaffPicks } from "../staff-picks";
+import { StaffPicks } from "./staff-picks";
 import { CldUploadButton } from "next-cloudinary";
-import { Suggestions } from "../suggestions";
+import { Suggestions } from "./suggestions";
 
 const cloudPresetName = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
