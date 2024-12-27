@@ -5,5 +5,11 @@ export default function middleware(req: any) {
 }
 
 export const config = {
-    matcher: ["/create", "/blog", "/blog/:path*", "/edit", "/edit/:path*"],
+    matcher: [
+        "/create",
+        "/profile",
+        "/profile/:path*",
+        "/edit",
+        "/edit/:path*",
+    ],
 };
