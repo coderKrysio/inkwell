@@ -34,12 +34,12 @@ export default function RootLayout({
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
-                    <SidebarProvider>
+                    <SidebarProvider open={false}>
                         <AppSidebar />
 
                         <Providers>
                             <Navbar />
-                            <main className="flex items-start justify-center w-full min-h-screen p-14">
+                            <main className="flex items-start justify-center w-full min-h-screen p-14 max-[640px]:p-4 max-[640px]:pt-14">
                                 {children}
                             </main>
                         </Providers>
