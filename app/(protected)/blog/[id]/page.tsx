@@ -1,10 +1,7 @@
 import { BackButton } from "@/components/backbutton";
-import { BlogPost } from "@/components/blog-post";
-import { ButtonAction } from "@/components/buttonaction";
-import { wordCounter, wordsPerMinute } from "@/lib/blog/estimateTime";
+import { BlogPost } from "@/components/blog/blog-post";
+import { CommentSection } from "@/components/blog/comment-section";
 import { db } from "@/lib/db";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import React from "react";
 
 async function getPost(id: string) {
     const response = await db.post.findFirst({
@@ -15,11 +12,17 @@ async function getPost(id: string) {
             id: true,
             title: true,
             content: true,
-            tag: true,
+            tags: true,
             author: true,
+            createdAt: true,
+            blog_likes: true,
+            banner_url: true,
+            bookmarked_blog: true,
+            comments: true,
         },
     });
-    return response;
+    if (response != null) return response;
+    return;
 }
 
 export default async function Page({
@@ -29,26 +32,18 @@ export default async function Page({
 }) {
     const { id } = await params;
     const post = await getPost(id);
-    const postTime = Math.ceil(wordCounter(post?.content) / wordsPerMinute);
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
-    const userName = user.given_name + " " + user.family_name;
-    const authorName = post?.author.first_name + " " + post?.author.last_name;
+
+    if (!post) {
+        return <div>Post not found!</div>;
+    }
 
     return (
         <div className="w-full flex flex-col gap-4">
             <BackButton />
-            <BlogPost />
-            {/* <h1 className="text-3xl font-bold mt-4 mb-8">{post?.title}</h1>
-            <span className="text-slate-600">{authorName}</span>
-            <span className="text-slate-600">
-                {postTime} {postTime > 1 ? "mins" : "min"}
-            </span>
-            {authorName === userName && <ButtonAction id={id} />}
-            <p className="bg-black text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded-full w-fit">
-                {post?.tag.name}
-            </p>
-            <p className="text-slate-700">{post?.content}</p> */}
+            <article className="max-w-4xl mx-auto p-4 md:p-2">
+                <BlogPost post={post} />
+                <CommentSection postId={id} />
+            </article>
         </div>
     );
 }
