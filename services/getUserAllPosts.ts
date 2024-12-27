@@ -5,6 +5,7 @@ export async function getUserAllPosts({
     user_id,
     first_name,
     last_name,
+    type,
 }: GetUserPostsProps) {
     const response = await db.post.findMany({
         where: {
@@ -30,9 +31,11 @@ export async function getUserAllPosts({
                         },
                     },
                 },
-                // {
-                //     post_type: ''
-                // }
+            ],
+            AND: [
+                {
+                    post_type: type,
+                },
             ],
         },
         select: {
