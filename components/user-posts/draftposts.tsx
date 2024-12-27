@@ -3,27 +3,29 @@ import { getUserPosts } from "@/lib/hooks/getUserPosts";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
-import { BlogCard } from "./blog/blog-card";
+import { BlogCard } from "../blog/blog-card";
 
-export const PublishedPosts = async () => {
+export const DraftPosts = async () => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
     const { posts, resultLength } = await getUserPosts({
         user_id: user.id,
         first_name: user.given_name,
         last_name: user.family_name,
+        type: "DRAFT",
     });
 
     return (
-        <div className="w-full flex flex-col gap-4 h-full">
+        <div className="max-w-6xl w-full mx-auto flex flex-col gap-4 h-full">
+            <h2 className="text-2xl font-semibold">Your Drafts</h2>
+
             {resultLength > 0 ? (
                 <>
-                    <p className="font-medium text-gray-800 mb-4">
-                        {resultLength} Blog{resultLength > 1 ? "s" : ""}{" "}
-                        Published
+                    <p className="font-medium text-muted-foreground mb-4">
+                        {resultLength} Draft Blog{resultLength > 1 ? "s" : ""}{" "}
                     </p>
 
-                    <div className="space-y-6">
+                    <div className="flex flex-col gap-10">
                         {posts.map((post: any) => (
                             <BlogCard key={post.id} post={post} />
                         ))}
@@ -35,7 +37,7 @@ export const PublishedPosts = async () => {
                         <PlusCircle className="w-12 h-12 text-gray-400" />
                     </div>
                     <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-                        No blogs published yet
+                        No blogs saved yet
                     </h2>
                     <p className="text-gray-600 mb-6">
                         Get started by creating your first blog post!
