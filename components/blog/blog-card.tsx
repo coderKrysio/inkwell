@@ -58,7 +58,7 @@ export const BlogCard = ({ post }: { post: PostProps }) => {
 
     const views = 3;
     return (
-        <article className="grid grid-cols-1 gap-4 pb-6 border-b-[1px] sm:grid-cols-[1fr_200px] sm:gap-6">
+        <article className="grid grid-cols-1 gap-4 pb-10 border-b-[1px] sm:grid-cols-[1fr_200px] sm:gap-6 last:border-0">
             <div className="space-y-3 sm:space-y-4">
                 <div className="flex items-center gap-2">
                     <Avatar className="w-8 h-8">
@@ -130,13 +130,11 @@ export const BlogCard = ({ post }: { post: PostProps }) => {
                     </div>
                 </div>
             </div>
-            <Image
+            <img
                 src={banner_url}
-                priority
-                alt=""
-                className="w-full h-48 sm:h-auto sm:w-[200px] rounded-lg object-cover"
-                width={200}
-                height={200}
+                data-priority
+                alt={title}
+                className="w-52 h-44 my-auto rounded-lg object-center object-fill"
             />
         </article>
     );
