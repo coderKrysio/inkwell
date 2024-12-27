@@ -1,5 +1,5 @@
 "use client";
-import { AnimatedLoader } from "@/components/animated-loader";
+import { AnimatedLoader } from "@/components/layout/animated-loader";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";

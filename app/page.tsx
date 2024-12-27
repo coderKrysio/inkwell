@@ -1,7 +1,7 @@
-import { BlogCard } from "@/components/blog-card";
-import { FilterBar } from "@/components/filter-bar";
-import { RecommendationSection } from "@/components/recommendation-section";
-import { TopicsNav } from "@/components/topics-nav";
+import { BlogCard } from "@/components/blog/blog-card";
+import { FilterBar } from "@/components/toolbar/filter-bar";
+import { RecommendationSection } from "@/components/suggestion-bar/recommendation-section";
+import { TopicsNav } from "@/components/toolbar/topics-nav";
 import { getPageInfo } from "@/lib/hooks/getPageInfo";
 import { PageProps } from "@/types";
 

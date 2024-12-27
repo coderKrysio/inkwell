@@ -1,10 +1,9 @@
-import { PostCard } from "@/components/post-card";
 import { Button } from "@/components/ui/button";
 import { getUserPosts } from "@/lib/hooks/getUserPosts";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
-import { BlogCard } from "./blog-card";
+import { BlogCard } from "./blog/blog-card";
 
 export const PublishedPosts = async () => {
     const { getUser } = getKindeServerSession();
@@ -17,9 +16,9 @@ export const PublishedPosts = async () => {
 
     return (
         <div className="w-full flex flex-col gap-4 h-full">
-            {resultLength < 0 ? (
+            {resultLength > 0 ? (
                 <>
-                    <p className="font-medium text-gray-800">
+                    <p className="font-medium text-gray-800 mb-4">
                         {resultLength} Blog{resultLength > 1 ? "s" : ""}{" "}
                         Published
                     </p>
