@@ -30,14 +30,22 @@ export async function getUserAllPosts({
                         },
                     },
                 },
+                // {
+                //     post_type: ''
+                // }
             ],
         },
         select: {
             id: true,
             title: true,
             content: true,
-            tag: true,
+            tags: true,
             author: true,
+            createdAt: true,
+            blog_likes: true,
+            banner_url: true,
+            bookmarked_blog: true,
+            comments: true,
         },
     });
     return response;

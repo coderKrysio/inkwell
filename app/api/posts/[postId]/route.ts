@@ -44,7 +44,7 @@ export async function PATCH(
             data: {
                 title: body.title,
                 content: body.content,
-                tagId: body.tagId,
+                // tagId: body.tagId,
             },
         });
         return NextResponse.json(
@@ -72,10 +72,6 @@ export async function GET(
         const post = await db.post.findFirst({
             where: {
                 id: postId,
-            },
-            include: {
-                tag: true,
-                author: true,
             },
         });
         return NextResponse.json(post, { status: 200 });

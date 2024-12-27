@@ -8,8 +8,10 @@ export async function POST(req: Request) {
             data: {
                 title: body.title,
                 content: body.content,
-                tagId: body.tagId,
                 author_id: body.authorId,
+                banner_url: body.banner_url,
+                post_type: body.post_type,
+                tags: body.tags,
             },
         });
         return NextResponse.json(post, { status: 200 });
