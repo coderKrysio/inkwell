@@ -7,7 +7,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import {
     Select,
     SelectContent,
@@ -17,7 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { readTimes } from "@/lib/search";
 import { ChevronDown } from "lucide-react";
 
@@ -48,7 +48,18 @@ export const Tags: FC<TagsProps> = ({
         searhtags,
     });
     return (
-        <>
+        <div className="visible flex flex-wrap items-center gap-2 max-[640px]:hidden">
+            <Select>
+                <SelectTrigger className="w-[140px]">
+                    <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="recent">Most Recent</SelectItem>
+                    <SelectItem value="popular">Most Popular</SelectItem>
+                    <SelectItem value="likes">Most Likes</SelectItem>
+                    <SelectItem value="readTime">Read Time</SelectItem>
+                </SelectContent>
+            </Select>
             <Select
                 onValueChange={handleReadTimeChange}
                 value={selectedReadTime === "" ? "" : selectedReadTime}
@@ -87,6 +98,6 @@ export const Tags: FC<TagsProps> = ({
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
-        </>
+        </div>
     );
 };

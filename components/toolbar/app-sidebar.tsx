@@ -33,6 +33,7 @@ import {
     SidebarMenuButton,
     SidebarProvider,
     SidebarTrigger,
+    useSidebar,
 } from "@/components/ui/sidebar";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 

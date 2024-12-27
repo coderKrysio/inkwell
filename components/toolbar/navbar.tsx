@@ -28,8 +28,8 @@ import {
     RegisterLink,
     useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Separator } from "./ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Separator } from "../ui/separator";
 
 const notifications = [
     {
@@ -59,22 +59,24 @@ export const Navbar = () => {
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b">
-            <div className="flex h-14 items-center px-4 gap-3">
-                <SidebarTrigger className="border-none">
-                    <Menu className="h-6 w-6" />
-                    <span className="sr-only">Toggle Sidebar</span>
-                </SidebarTrigger>
-                <Separator
-                    orientation="vertical"
-                    className="w-[1.5px] rounded-full bg-gray-600 h-6"
-                />
-                <Link href="/" className="mr-6 flex items-center space-x-2">
-                    <span className="hidden text-xl font-bold sm:inline-block">
-                        Inkwell
-                    </span>
-                </Link>
+            <div className="h-14 flex items-center justify-between px-4">
+                <div className="flex items-center gap-3">
+                    <SidebarTrigger className="border-none">
+                        <Menu className="h-6 w-6" />
+                        <span className="sr-only">Toggle Sidebar</span>
+                    </SidebarTrigger>
+                    <Separator
+                        orientation="vertical"
+                        className="w-[1.5px] rounded-full bg-gray-600 h-6"
+                    />
+                    <Link href="/" className="mr-6 flex items-center space-x-2">
+                        <span className="text-xl font-bold sm:inline-block">
+                            Inkwell
+                        </span>
+                    </Link>
+                </div>
 
-                <div className="ml-auto flex items-center space-x-4">
+                <div className="flex items-center space-x-4">
                     {isAuthenticated ? (
                         <>
                             <Popover>
