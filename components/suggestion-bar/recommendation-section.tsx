@@ -1,15 +1,16 @@
 "use client";
-import { StaffPicks } from "./staff-picks";
+import { StaffPicks } from "../staff-picks";
 import { CldUploadButton } from "next-cloudinary";
+import { Suggestions } from "../suggestions";
 
 const cloudPresetName = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export const RecommendationSection = () => {
     return (
-        <>
+        <div className="w-full h-screen flex flex-col gap-12 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] max-[1024px]:h-auto">
             <StaffPicks />
-
-            <div className="flex items-center justify-center ">
+            <Suggestions />
+            {/* <div className="flex items-center justify-center ">
                 <CldUploadButton
                     options={{
                         multiple: false,
@@ -29,7 +30,7 @@ export const RecommendationSection = () => {
                 >
                     <span className="text-lg">Upload Images</span>
                 </CldUploadButton>
-            </div>
-        </>
+            </div> */}
+        </div>
     );
 };

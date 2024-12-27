@@ -3,9 +3,10 @@ import Image from "next/image";
 
 export function StaffPicks() {
     return (
-        <div className="space-y-4 sm:space-y-6">
-            <h2 className="text-lg sm:text-xl font-bold">Staff Picks</h2>
-            <div className="space-y-4 sm:space-y-6">
+        <div className="flex flex-col gap-3">
+            <h2 className="text-lg font-bold">Staff Picks</h2>
+            {/* <div>(Coming soon...)</div> */}
+            <div className="flex flex-col gap-5">
                 <article className="space-y-2">
                     <div className="flex items-center gap-2">
                         <Image
@@ -59,7 +60,7 @@ export function StaffPicks() {
             </div>
             <Link
                 href="#"
-                className="text-xs sm:text-sm text-muted-foreground hover:text-foreground"
+                className="text-sm text-gray-500 font-semibold hover:text-primary"
             >
                 See the full list
             </Link>
