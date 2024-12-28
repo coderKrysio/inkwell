@@ -40,9 +40,9 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Profile", href: "/profile", icon: User },
-    { name: "My Posts", href: "/profile/my-posts", icon: PenTool },
-    { name: "Reading List", href: "/reading-list", icon: BookOpen },
-    { name: "Create Post", href: "/create-post", icon: PlusCircle },
+    { name: "My Publications", href: "/profile/publications", icon: PenTool },
+    { name: "Reading List", href: "/profile/reading-list", icon: BookOpen },
+    { name: "Create Post", href: "/create-new-blog", icon: PlusCircle },
 ];
 
 export const AppSidebar = () => {
@@ -84,7 +84,9 @@ export const AppSidebar = () => {
                         <SidebarMenuItem key={item.href}>
                             <SidebarMenuButton
                                 asChild
+                                tooltip={item.name}
                                 isActive={pathname === item.href}
+                                className="hover:bg-gray-200 data-[active=true]:text-black data-[active=true]:bg-gray-200"
                             >
                                 <Link
                                     href={item.href}

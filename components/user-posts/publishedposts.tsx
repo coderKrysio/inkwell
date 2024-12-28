@@ -43,7 +43,7 @@ export const PublishedPosts = async () => {
                     <p className="text-gray-600 mb-6">
                         Get started by creating your first blog post!
                     </p>
-                    <Link href={"/create"}>
+                    <Link href={"/create-new-blog"}>
                         <Button>
                             <PlusCircle className="mr-2 h-4 w-4" /> Add a new
                             blog post

@@ -181,7 +181,9 @@ export const Navbar = () => {
                                         <Link href="/settings">Settings</Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>
-                                        <Link href="/create">New Post</Link>
+                                        <Link href="/create-new-blog">
+                                            New Post
+                                        </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem>

@@ -11,7 +11,7 @@ export default function Page() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-4 mb-6 space-y-4 sm:space-y-0">
                 <h1 className="text-3xl font-bold">My Publications</h1>
                 <div className="space-x-4">
-                    <Link href={"/create"}>
+                    <Link href={"/create-new-blog"}>
                         <Button>
                             <PenSquare className="w-4 h-4 mr-2" />
                             Write a Post

@@ -6,7 +6,7 @@ export default function middleware(req: any) {
 
 export const config = {
     matcher: [
-        "/create",
+        "/create-new-blog",
         "/profile",
         "/profile/:path*",
         "/edit",
