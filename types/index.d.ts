@@ -9,7 +9,7 @@ import {
 export type FormInputPost = {
     title: string;
     content: string;
-    tagId: string;
+    tagId?: string;
     authorId: string;
 };
 
@@ -50,9 +50,10 @@ export interface PageInfoProps {
 }
 
 export interface GetUserPostsProps {
-    user_id: string;
-    first_name: string | null;
-    last_name: string | null;
+    user_id?: string;
+    first_name?: string | null;
+    last_name?: string | null;
+    type?: "DRAFT" | "PUBLISHED";
 }
 
 export interface PostProps {
@@ -76,4 +77,9 @@ export interface PostComments {
     post: Post;
     user_id: String;
     user: User;
+}
+
+export interface Tag {
+    id: string;
+    name: string;
 }
