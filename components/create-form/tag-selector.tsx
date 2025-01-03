@@ -12,14 +12,22 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { X } from "lucide-react";
+import { Tag } from "@prisma/client";
 
 interface TagSelectorProps {
     dataTags: {
         name: string;
         id: string;
     }[];
-    selectedTags: string[];
-    onTagsChange: (tags: string[]) => void;
+    selectedTags: Tag[];
+    onTagsChange: React.Dispatch<
+        React.SetStateAction<
+            {
+                name: string;
+                id: string;
+            }[]
+        >
+    >;
 }
 
 export default function TagSelector({
@@ -29,15 +37,15 @@ export default function TagSelector({
 }: TagSelectorProps) {
     const [selectedTag, setSelectedTag] = useState<string>("");
 
-    const handleAddTag = (tag: string) => {
-        if (tag && !selectedTags.includes(tag)) {
-            onTagsChange([...selectedTags, tag]);
+    const handleAddTag = (tag: string, tagId: string) => {
+        if (tag && !selectedTags.includes({ name: tag, id: tagId })) {
+            onTagsChange([...selectedTags, { name: tag, id: tagId }]);
         }
         setSelectedTag("");
     };
 
     const handleRemoveTag = (tagToRemove: string) => {
-        onTagsChange(selectedTags.filter((tag) => tag !== tagToRemove));
+        onTagsChange(selectedTags.filter((tag) => tag.name !== tagToRemove));
     };
 
     return (
@@ -50,16 +58,24 @@ export default function TagSelector({
                 onValueChange={(value) => {
                     console.log(selectedTag, "selectedTag");
                     setSelectedTag(value);
-                    handleAddTag(value);
+                    handleAddTag(
+                        value,
+                        dataTags.find((tag) => tag.name === value)?.id as string
+                    );
                 }}
-                name="tags"
             >
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a tag" />
                 </SelectTrigger>
                 <SelectContent>
                     {dataTags
-                        .filter((tag) => !selectedTags.includes(tag.name))
+                        .filter(
+                            (tag) =>
+                                !selectedTags.includes({
+                                    name: tag.name,
+                                    id: tag.id,
+                                })
+                        )
                         .map((tag) => (
                             <SelectItem key={tag.id} value={tag.name}>
                                 {tag.name}
@@ -68,27 +84,24 @@ export default function TagSelector({
                 </SelectContent>
             </Select>
             <div className="flex flex-wrap gap-2 mt-2">
-                {selectedTags.map(
-                    (tag) =>
-                        tag !== "" && (
-                            <Badge
-                                key={tag}
-                                variant="secondary"
-                                className="text-sm py-1 px-2"
-                            >
-                                {tag}
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    className="ml-1 h-auto p-0"
-                                    onClick={() => handleRemoveTag(tag)}
-                                >
-                                    <X className="h-3 w-3" />
-                                    <span className="sr-only">Remove</span>
-                                </Button>
-                            </Badge>
-                        )
-                )}
+                {selectedTags.map((tag) => (
+                    <Badge
+                        key={tag.id}
+                        variant="secondary"
+                        className="text-sm py-1 px-2"
+                    >
+                        {tag.name}
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="ml-1 h-auto p-0"
+                            onClick={() => handleRemoveTag(tag.name)}
+                        >
+                            <X className="h-3 w-3" />
+                            <span className="sr-only">Remove</span>
+                        </Button>
+                    </Badge>
+                ))}
             </div>
         </div>
     );
