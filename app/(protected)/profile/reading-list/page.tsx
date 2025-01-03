@@ -1,3 +1,4 @@
+"use server";
 import { BlogCard } from "@/components/blog/blog-card";
 import { Button } from "@/components/ui/button";
 import { getUserBookmarks } from "@/services/getUserBookmarks";
@@ -7,7 +8,7 @@ import { BookmarkPlus, Link, PlusCircle } from "lucide-react";
 export default async function Page() {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
-    const bookmarks = await getUserBookmarks({ user_id: user.id });
+    const bookmarks = await getUserBookmarks({ user_id: user?.id });
     const bookmarksLength = bookmarks.length;
     return (
         <div className="container flex flex-col gap-4 pt-4">
