@@ -3,7 +3,7 @@ import { FormInputPost } from "@/types";
 import { Tag } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { FC } from "react";
+import React, { FC, useActionState, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -16,10 +16,12 @@ import TagSelector from "./tag-selector";
 import { BlogValidations } from "@/validators/blog-validations";
 import { formatErrorMessages } from "@/services/formatErrorMessages";
 import { db } from "@/lib/db";
+import { saveBlog } from "./blog-actions";
+import { useFormStatus } from "react-dom";
 
 interface FormPostProps {
-    submit: SubmitHandler<FormInputPost>;
-    isEditing: boolean;
+    submit?: SubmitHandler<FormInputPost>;
+    isEditing?: boolean;
     isPending?: boolean;
     initialValue?: FormInputPost;
 }
@@ -45,30 +47,40 @@ export const FormPost: FC<FormPostProps> = ({
     });
 
     const [bannerImage, setBannerImage] = useState<string>("");
-    const [selectedTags, setSelectedTags] = useState<string[]>([""]);
+    const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
     const [errorMessages, setErrorMessages] = useState("");
+    const [state, formAction] = useActionState(saveBlog, {
+        error: false,
+        success: false,
+    });
+    const { pending } = useFormStatus();
+
+    useEffect(() => {
+        if (state.error) {
+            if (typeof state.errorDetails === "string") {
+                setErrorMessages(state.errorDetails);
+            } else {
+                setErrorMessages(formatErrorMessages(state.errorDetails));
+            }
+            setErrorMessages(formatErrorMessages(state.errorDetails));
+        } else if (state.success) {
+            console.log("success");
+        }
+    }, [state]);
 
     const handleFormSubmit = async (e: any) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         formData.append("bannerUrl", bannerImage);
         const fields = Object.fromEntries(formData);
-        console.log(fields);
 
         const validation = BlogValidations.safeParse(fields);
         if (!validation.success) {
-            // console.log(validation.error.flatten().fieldErrors);
-            console.log(
+            setErrorMessages(
                 formatErrorMessages(validation.error.flatten().fieldErrors)
             );
-            // await createBlogPost({
-            //     title,
-            //     description,
-            //     bannerImage,
-            //     tags: selectedTags,
-            // });
-            // router.push("/blog"); // Redirect to blog list page after successful creation
         } else {
+            formAction({ formData, tags: selectedTags });
         }
     };
 
@@ -160,10 +172,23 @@ export const FormPost: FC<FormPostProps> = ({
                 />
             )}
 
+            {state.success ? (
+                <span className="text-green-500">User has been added!</span>
+            ) : (
+                errorMessages && (
+                    <span
+                        className="text-red-500"
+                        dangerouslySetInnerHTML={{ __html: errorMessages }}
+                    />
+                )
+            )}
+
             <div className="flex gap-4">
                 {/* <Button variant={"outline"}>Save in Draft</Button> */}
 
-                <Button>Create Blog Post</Button>
+                <Button disabled={pending}>
+                    {pending ? "Creating..." : "Create Blog Post"}
+                </Button>
             </div>
         </form>
     );
